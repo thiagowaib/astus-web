@@ -1,0 +1,29 @@
+@import '../../scss/variables';
+
+button {
+    width: 100%;
+    padding: 15px 0;
+
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 1.25em;
+    font-weight: 700;
+
+    border: 0;
+    border-radius: 5px;
+
+    outline: none;
+    background-color: $Main-2;
+    color: $Secondary-4;
+
+    transition: all .2s;
+
+    &:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled){
+        cursor: pointer;
+        transform: scale(1.05);
+    }
+}

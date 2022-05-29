@@ -1,8 +1,16 @@
+import { SignUp, SignIn } from './pages'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import './reset.scss'
+
 function App() {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/signin" element={<SignIn/>}/>
+      </Routes>    
+    </BrowserRouter>
   );
 }
 

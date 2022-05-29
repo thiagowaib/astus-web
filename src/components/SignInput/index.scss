@@ -1,0 +1,53 @@
+@import '../../scss/variables';
+
+input {
+    width: 100%;
+    padding: 15px;
+    
+    font-size: 1.15em;
+    font-family: 'Comfortaa', sans-serif;
+
+    border: 1px solid $Secondary-2;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    outline: none;
+    background-color: $Secondary-3;
+    color: $Secondary-2;
+
+    transition: all .2s;
+
+    &:focus{
+        border: 1px solid #A268EC;
+        box-shadow: 0 0 5px #A268EC90;
+    }
+
+    &:not([value=""]){
+        background-color: $Secondary-4;
+        color: $Secondary-1;
+    }
+
+    &[success="true"]{
+        border: 1px solid $Success;
+        box-shadow: 0 0 3px $Success-Shadow;
+    }
+}
+
+input.With-Icon{
+    padding-right: 35px;
+}
+
+.Icon-Show {
+    color: $Secondary-1;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: 15px;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+input[value=""] + .Icon-Show {
+    color: $Secondary-2
+}
