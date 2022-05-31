@@ -1,6 +1,6 @@
 @import '../../scss/variables';
 
-input {
+.SignInput {
     width: 100%;
     padding: 15px;
     
@@ -33,7 +33,7 @@ input {
     }
 }
 
-input.With-Icon{
+.SignInput.With-Icon{
     padding-right: 35px;
 }
 
@@ -48,6 +48,6 @@ input.With-Icon{
     }
 }
 
-input[value=""] + .Icon-Show {
+.SignInput[value=""] + .Icon-Show {
     color: $Secondary-2
 }

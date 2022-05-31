@@ -3,7 +3,7 @@ import Banner_Wave from '../../assets/Banner_Wave.svg'
 
 const Banner = () => {
   return (<>
-  <img src={Banner_Wave}/>
+  <img className="Banner" src={Banner_Wave} alt="Astus Hub"/>
   </>)
 }
 

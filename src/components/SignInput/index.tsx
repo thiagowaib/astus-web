@@ -9,7 +9,6 @@ const SignInput = (props:any) => {
   const [icon, setIcon] = useState(props.icon ? 0 : -1)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  console.log(`Icon: ${icon}`)
   const handleChange = (e:any) => {
     const v = e.target.value
     setValue(v)
@@ -37,7 +36,7 @@ const SignInput = (props:any) => {
   return (<>
       <input
         ref={inputRef}
-        className={icon>=0 ? "With-Icon" : ""}
+        className={icon>=0 ? "SignInput With-Icon" : "SignInput"}
         value={value}
         onInput={handleChange}
         {...props}

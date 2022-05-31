@@ -9,6 +9,7 @@ interface Props {
 const SignButton = ({value="", disabled=false, action}:Props) => {
   return (<>
       <button
+      className='SignButton'
       onClick={action}
       disabled={disabled}
       >{value}</button>

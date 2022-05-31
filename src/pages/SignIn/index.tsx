@@ -1,7 +1,9 @@
-import { useEffect } from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Banner, SignButton, SignInput } from "../../components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify"
+import { motion } from "framer-motion"
+import axios from 'axios'
 import './index.scss'
 
 interface dataProps {
@@ -11,6 +13,7 @@ interface dataProps {
 
 const SignIn = () => {
   
+  const navigate = useNavigate()
   const [data, setData] = useState({
     email: "",
     senha: "",
@@ -19,8 +22,28 @@ const SignIn = () => {
   
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]*)$/i
 
-  const PostData = () => {
-    console.log(data)
+  const ToFeed = () => {
+    if(!toast.isActive(0))
+      navigate('/feed')
+  }
+
+  const UserSignIn = () => {
+    if(!toast.isActive(1))
+    axios.post(`${process.env.REACT_APP_BASE_URL}/UserSignIn`, {
+      email: data.email,
+      password: data.senha
+    })
+    .then((res) => {
+      console.log({response: res})
+      toast.success('Usuário Cadastrado!', {
+        toastId: 1,
+        progress: undefined,
+        onClose: ToFeed
+      });
+    })
+    .catch((err) => {
+      console.error(err)
+    })
   }
 
   const checkDisable = (data:dataProps) => {
@@ -36,7 +59,25 @@ const SignIn = () => {
   }, [data])
 
   return (
-    <section className="SignIn">
+    <motion.section 
+    className="SignIn"
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    exit={{opacity: 0, transition: {duration:0.2} }}
+    >
+      {/* React-Toastify Toast Container */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+      />
+      {/* ============================== */}
       <section className="Left-Container">
       <Banner/>
       </section>
@@ -49,7 +90,7 @@ const SignIn = () => {
           <div className="Input">
             <SignInput
             placeholder="Email"
-            action={(v:string)=>{setData({...data, email:v});console.log(v)}}
+            action={(v:string)=>{setData({...data, email:v})}}
             type="email"
             autofocus="autofocus"
             />
@@ -70,7 +111,7 @@ const SignIn = () => {
           <SignButton
           value="Entrar"
           disabled={disable}
-          action={PostData}
+          action={UserSignIn}
           />
           <p>
             Primeira vez aqui?{" "}
@@ -80,7 +121,7 @@ const SignIn = () => {
         {/* ================ */}
       </section>
 
-    </section>
+    </motion.section>
   )
 }
 

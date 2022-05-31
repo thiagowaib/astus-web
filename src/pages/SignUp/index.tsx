@@ -1,7 +1,10 @@
-import { useEffect } from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Banner, SignButton, SignInput } from "../../components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import 'react-toastify/dist/ReactToastify.min.css'
+import { ToastContainer, toast } from "react-toastify"
+import { motion } from 'framer-motion'
+import axios from 'axios'
 import './index.scss'
 
 interface dataProps {
@@ -13,6 +16,8 @@ interface dataProps {
 
 const SignUp = () => {
   
+  const navigate = useNavigate()
+
   const [data, setData] = useState({
     email: "",
     nome: "",
@@ -23,9 +28,33 @@ const SignUp = () => {
   
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]*)$/i
 
-  const PostData = () => {
-    console.log(data)
+  const ToSignIn = () => {
+    if(!toast.isActive(0))
+      navigate('/signin')
   }
+
+  const UserSignUp = () => {
+    if(!toast.isActive(0)) {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/UserSignUp`, {
+        email: data.email,
+        name: data.nome,
+        password: data.senha
+      })
+      .then(() => {
+          toast.success('Usuário Cadastrado!', {
+            toastId: 0,
+            progress: undefined,
+            onClose: ToSignIn
+          });
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    }
+  }
+
+  
+  
 
   const checkDisable = (data:dataProps) => {
     if(
@@ -42,7 +71,25 @@ const SignUp = () => {
   }, [data])
 
   return (
-    <section className="SignUp">
+    <motion.section 
+    className="SignUp"
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    exit={{opacity: 0, transition: {duration:0.2} }}
+    >
+      {/* React-Toastify Toast Container */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+      />
+      {/* ============================== */}
       <section className="Left-Container">
       <Banner/>
       </section>
@@ -55,9 +102,9 @@ const SignUp = () => {
           <div className="Input">
             <SignInput
             placeholder="Email"
-            action={(v:string)=>{setData({...data, email:v});console.log(v)}}
+            action={(v:string)=>{setData({...data, email:v})}}
             type="email"
-            autofocus="autofocus"
+            autoFocus
             success={emailRegex.test(data.email) ? "true" : "false"}
             />
           </div>
@@ -100,7 +147,7 @@ const SignUp = () => {
           <SignButton
           value="Cadastrar"
           disabled={disable}
-          action={PostData}
+          action={UserSignUp}
           />
           <p>
             Já possui uma conta?{" "}
@@ -110,7 +157,7 @@ const SignUp = () => {
         {/* ================ */}
       </section>
 
-    </section>
+    </motion.section>
   )
 }
 

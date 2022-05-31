@@ -1,15 +1,12 @@
-import { SignUp, SignIn } from './pages'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import './reset.scss'
+import { AnimatedRoutes } from './components';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/signup" element={<SignUp/>}/>
-        <Route path="/signin" element={<SignIn/>}/>
-      </Routes>    
+      <AnimatedRoutes/>
     </BrowserRouter>
   );
 }
