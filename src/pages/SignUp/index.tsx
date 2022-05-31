@@ -29,20 +29,20 @@ const SignUp = () => {
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]*)$/i
 
   const ToSignIn = () => {
-    if(!toast.isActive(0))
+    if(!toast.isActive("Success"))
       navigate('/signin')
   }
 
   const UserSignUp = () => {
-    if(!toast.isActive(0)) {
+    if(!toast.isActive("Success")) {
       axios.post(`${process.env.REACT_APP_BASE_URL}/UserSignUp`, {
         email: data.email,
         name: data.nome,
         password: data.senha
       })
-      .then(() => {
-          toast.success('Usuário Cadastrado!', {
-            toastId: 0,
+      .then((res) => {
+          toast.success(`${res.data.message}!`, {
+            toastId: "Success",
             progress: undefined,
             onClose: ToSignIn
           });

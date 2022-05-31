@@ -23,27 +23,41 @@ const SignIn = () => {
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]*)$/i
 
   const ToFeed = () => {
-    if(!toast.isActive(0))
+    if(!toast.isActive(1))
       navigate('/feed')
   }
 
   const UserSignIn = () => {
-    if(!toast.isActive(1))
-    axios.post(`${process.env.REACT_APP_BASE_URL}/UserSignIn`, {
-      email: data.email,
-      password: data.senha
-    })
-    .then((res) => {
-      console.log({response: res})
-      toast.success('Usuário Cadastrado!', {
-        toastId: 1,
-        progress: undefined,
-        onClose: ToFeed
-      });
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+    if(!toast.isActive("Success"))
+      axios.post(`${process.env.REACT_APP_BASE_URL}/UserSignIn`, {
+        email: data.email,
+        password: data.senha
+      })
+      .then((res) => {
+        console.log({response: res})
+        toast.success(`${res.data.message}!`, {
+          toastId: "Success",
+          progress: undefined,
+          onClose: ToFeed
+        });
+      })
+      .catch((err) => {
+        if(err.response.status === 404 || err.response.status === 401) {
+          toast.error(`${err.response.data.message}.`, {
+            autoClose: 4500,
+            progress: undefined,
+          });
+        console.log("ERROR!")
+
+        } else {
+          console.error(err)
+          toast.error(`Ocorreu um erro, tente novamente mais tarde`, {
+            autoClose: 5500,
+            progress: undefined,
+            theme: 'colored'
+          });
+        }
+      })
   }
 
   const checkDisable = (data:dataProps) => {
