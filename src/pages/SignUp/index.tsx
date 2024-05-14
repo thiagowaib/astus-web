@@ -35,7 +35,7 @@ const SignUp = () => {
 
   const UserSignUp = () => {
     if(!toast.isActive("Success")) {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/UserSignUp`, {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
         email: data.email,
         name: data.nome,
         password: data.senha

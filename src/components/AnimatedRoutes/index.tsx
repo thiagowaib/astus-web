@@ -24,8 +24,8 @@ const AnimatedRoutes = () => {
     <AnimatePresence>
         <section className={getClassName()}>
         <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<SignIn/>}/>
             <Route path="/signup" element={<SignUp/>}/>
-            <Route path="/signin" element={<SignIn/>}/>
             <Route path="/feed" element={<Feed/>}/>
         </Routes>
         </section>
